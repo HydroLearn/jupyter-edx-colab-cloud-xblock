@@ -1,7 +1,7 @@
 import logging
 import re
 import pkg_resources
-import urlparse
+import urllib.parse
 
 from xblock.core import XBlock
 from xblock.fields import Scope, String, Integer, Boolean
@@ -58,7 +58,7 @@ class ColabXBlock(XBlock, StudioEditableXBlockMixin):
             validation.add(
                 ValidationMessage(
                     ValidationMessage.ERROR, 
-                    u"Notebook URL must start with 'http://' or 'https://'"))
+                    "Notebook URL must start with 'http://' or 'https://'"))
 
 
     def student_view(self, context=None):
@@ -81,7 +81,7 @@ class ColabXBlock(XBlock, StudioEditableXBlockMixin):
     def _get_colab_url(self, url):
         """If github.com in url, return colab'd version of that url"""
         github_base = 'https://colab.research.google.com/github/{}'
-        path = urlparse.urlsplit(url)
+        path = urllib.parse.urlsplit(url)
         if path.netloc == 'github.com':
             url = github_base.format(path.path)
         return url
